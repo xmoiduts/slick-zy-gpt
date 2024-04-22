@@ -19,7 +19,7 @@ export enum OpenAiModel {
 	// dated claude used different upstream provider than undated,
 	// dated claude supports 200k context window while undated ones support 20k.
 	Gpt4all = 'gpt-4-all',
-	Claude3Haiku = 'claude-3-haiku',
+	//Claude3Haiku = 'claude-3-haiku',
 	Claude3Sonnet = 'claude-3-sonnet',
 	Claude3Opus = 'claude-3-opus',
 	Claude3Opus20240229 = 'claude-3-opus-20240229'
@@ -86,12 +86,12 @@ export const models: { [key in OpenAiModel]: OpenAiModelStats } = {
 		hidden: false
 	},
 	// Models below are not openai services, feel free to delete them.
-	[OpenAiModel.Claude3Haiku]: {
-		maxTokens: 4096,
-		contextWindow: 20000,
-		costPrompt: 0.00025,
-		costCompletion: 0.00125
-	},	
+	//[OpenAiModel.Claude3Haiku]: {
+	//	maxTokens: 4096,
+	//	contextWindow: 20000,
+	//	costPrompt: 0.00025,
+	//	costCompletion: 0.00125
+	//},	
 	[OpenAiModel.Claude3Sonnet]: {
 		maxTokens: 4096,
 		contextWindow: 20000,
@@ -141,6 +141,10 @@ export function countTokens(message: ChatCompletionMessageParam): number {
 	}
 
 	return num_tokens;
+}
+
+export function modelExists(modelName: OpenAiModel): boolean {
+	return modelName in models;
 }
 
 export function estimateChatCost(chat: Chat): ChatCost {
