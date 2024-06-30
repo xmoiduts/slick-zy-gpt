@@ -24,7 +24,16 @@ export enum AiModel {
 	Gpt4TurboPreview = 'gpt-4-turbo-preview',
 	MistralLarge = 'mistral-large-latest',
 	Llama38b = 'llama3-8b-8192',
-	Llama370b = 'llama3-70b-8192'
+	Llama370b = 'llama3-70b-8192',
+	Gpt4all = 'gpt-4-all',
+	Claude3Haiku = 'claude-3-haiku',
+	Claude3Haiku20240229 = 'claude-3-haiku-20240229',
+	Claude3Sonnet = 'claude-3-sonnet',
+	Claude3Opus = 'claude-3-opus',
+	Claude3Opus20240229 = 'claude-3-opus-20240229',
+	Claude35Sonnet = 'claude-3-5-sonnet',
+	Claude35Sonnet20240620 = 'claude-3-5-sonnet-20240620',
+	Gemini1_5_pro = 'gemini-1.5-pro'
 }
 
 export interface AiSettings {
@@ -133,7 +142,74 @@ export const models: { [key in AiModel]: AiModelStats } = {
 		costInput: 60,
 		costOutput: 120,
 		hidden: true
+	},
+	// Models below are not openai services, feel free to delete them.
+	[AiModel.Claude3Haiku]: {
+		provider: AiProvider.OpenAi,
+		maxTokens: 4096,
+		contextWindow: 20000,
+		costInput: 0.25,
+		costOutput: 1.25
+	},	
+	[AiModel.Claude3Haiku20240229]: {
+		provider: AiProvider.OpenAi,
+		maxTokens: 4096,
+		contextWindow: 200000,
+		costInput: 0.25,
+		costOutput: 1.25
+	},	
+	[AiModel.Claude3Sonnet]: {
+		provider: AiProvider.OpenAi,
+		maxTokens: 4096,
+		contextWindow: 20000,
+		costInput: 3,
+		costOutput: 15
+	},
+	[AiModel.Claude3Opus]: {
+		provider: AiProvider.OpenAi,
+		maxTokens: 4096,
+		contextWindow: 20000,
+		costInput: 15,
+		costOutput: 75
+	},
+	[AiModel.Claude3Opus20240229]: {
+		provider: AiProvider.OpenAi,
+		maxTokens: 4096,
+		contextWindow: 200000,
+		costInput: 15,
+		costOutput: 75
+	},
+	[AiModel.Claude35Sonnet]: {
+		provider: AiProvider.OpenAi,
+		maxTokens: 4096,
+		contextWindow: 20000,
+		costInput: 3,
+		costOutput: 15
+	},
+	[AiModel.Claude35Sonnet20240620]: {
+		provider: AiProvider.OpenAi,
+		maxTokens: 4096,
+		contextWindow: 200000,
+		costInput: 3,
+		costOutput: 15
+	},
+	[AiModel.Gpt4all]: {
+		provider: AiProvider.OpenAi,
+		maxTokens: 4096,
+		contextWindow: 32768,
+		costInput: 10,
+		costOutput: 30,
+		hidden: false
+	},
+	[AiModel.Gemini1_5_pro]: {
+		provider: AiProvider.OpenAi,
+		maxTokens: 8192,
+		contextWindow: 1000000,
+		costInput: 2.5,
+		costOutput: 7.5,
+		hidden: false
 	}
+	
 };
 
 export const providers: AiProvider[] = [AiProvider.OpenAi, AiProvider.Mistral, AiProvider.Meta];
@@ -162,7 +238,7 @@ export function countTokens(message: ChatMessage): number {
 	return num_tokens;
 }
 
-export function modelExists(modelName: OpenAiModel): boolean {
+export function modelExists(modelName: AiModel): boolean {
 	return modelName in models;
 }
 
